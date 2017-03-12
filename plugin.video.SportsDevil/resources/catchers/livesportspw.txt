@@ -1,0 +1,27 @@
+item_info_name=title
+item_info_from=@PARAM1@
+item_info_build=LiveSports - %s
+
+item_info_name=pUrl
+item_info_from=@PARAM1@
+item_info_build=http://www.livesports.pw/embed.php?file=%s&height=397&width=650
+#item_info_convert=debug
+
+item_info_name=hls_url
+item_info_from=pUrl
+item_info_convert=getInfo('%s','.*jwplayer.*?file:\s*["']([^'"]+)"','@PARAM1@')
+item_info_build=%s
+
+item_info_name=_tmp
+item_info_from=pUrl
+item_info_convert=getInfo('%s','.*["'](rtmp:\/\/.*\/(?:redirect|live).*?\/)(\w+)["']','@PARAM1@','r|p')
+item_info_build=%s
+
+item_info_name=rtmp_url
+item_info_from=r + ' flashVer=WIN\24,0,0,189 pageUrl=' + pUrl + ' swfVfy=http://p.jwpcdn.com/6/12/jwplayer.flash.swf playPath=' + p
+item_info_build=%s
+
+item_info_name=url
+item_info_from=hls_url || rtmp_url
+item_info_build=%s
+
