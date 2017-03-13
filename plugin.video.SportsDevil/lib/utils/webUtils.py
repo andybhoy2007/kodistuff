@@ -10,7 +10,7 @@ import socket
 from HTMLParser import HTMLParser
 from fileUtils import fileExists, setFileContent, getFileContent
 
-#import lib.common
+import lib.common
 
 #------------------------------------------------------------------------------
 socket.setdefaulttimeout(30)
@@ -117,6 +117,12 @@ class BaseRequest(object):
             #zo**tv
             if 'uagent' in form_data[0]:
                 form_data[0] = ('uagent',self.s.headers['User-Agent'])
+                # lib.common.log("JairoX10:" + form_data[1][0])
+                # lib.common.log("JairoX10:" + form_data[1][1])
+                # lib.common.log("JairoX10:" + form_data[2][0])
+                # lib.common.log("JairoX10:" + form_data[2][1])
+                # lib.common.log("JairoX10:" + form_data[3][0])
+                # lib.common.log("JairoX10:" + form_data[3][1])
 
             r = self.s.post(url, headers=headers, data=form_data, timeout=20)
         else:
