@@ -6,7 +6,6 @@ item_info_from=@PARAM1@
 item_info_convert=parseText('%s','.*v_vid="?(\d+)"?,\s*v_vpp="([^"]+)",\s*v_vpv="([^"]+)".*?zoomtv.*kemp.js','id|fid|cx')
 item_info_build=%s
 
-
 item_info_name=title
 item_info_from=fid
 item_info_convert=debug
@@ -20,9 +19,26 @@ item_info_name=pageUrl
 item_info_from=http://www.zoomtv.me/kembed.php?|'  + postData
 item_info_build=%s
 
-item_info_name=h0
+item_info_name=cookie1
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*','@REFERER@')
+item_info_convert=getCookies(zmad)
+item_info_build=%s
+
+item_info_name=cookie2
+item_info_from=pageUrl
+item_info_convert=getCookies(PHPSESSID)
+item_info_build=%s
+
+item_info_name=cookies
+item_info_from=2bfd_unique_user=1;zmad='+cookie1+';PHPSESSID='+cookie2
+item_info_convert=quote(%s)
+item_info_convert=quote(%s)
+item_info_convert=debug
+item_info_build=%s
+
+item_info_name=h0
+item_info_from=pageUrl+'&Cookie='+cookies
+item_info_convert=getInfo('%s','(.*)','@REFERER@')
 item_info_convert=debug
 item_info_build=%s
 

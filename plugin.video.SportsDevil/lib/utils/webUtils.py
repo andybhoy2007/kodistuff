@@ -116,13 +116,17 @@ class BaseRequest(object):
         if form_data:
             #zo**tv
             if 'uagent' in form_data[0]:
-                form_data[0] = ('uagent',self.s.headers['User-Agent'])
-                # lib.common.log("JairoX10:" + form_data[1][0])
-                # lib.common.log("JairoX10:" + form_data[1][1])
-                # lib.common.log("JairoX10:" + form_data[2][0])
-                # lib.common.log("JairoX10:" + form_data[2][1])
-                # lib.common.log("JairoX10:" + form_data[3][0])
-                # lib.common.log("JairoX10:" + form_data[3][1])
+                form_data[0] = ('uagent',urllib.quote(self.s.headers['User-Agent']))
+                if len(form_data) > 4 and 'Cookie' in form_data[4]:
+                    headers['Cookie'] = form_data[4][1]
+                    del form_data[4]
+                   
+                headers['Content-Type'] = 'application/x-www-form-urlencoded'
+                headers['User-Agent'] = self.s.headers['User-Agent']
+                headers['Content-Length'] = str( len(form_data[0][1]) + len(form_data[1][1]) + len(form_data[2][1]) + len(form_data[3][1]) )
+                #lib.common.log("JairoX10:" + str( len(form_data[0][1]) + len(form_data[1][1]) + len(form_data[2][1]) + len(form_data[3][1]) ))
+                #lib.common.log("JairoX10:" + form_data[0][1])
+               
 
             r = self.s.post(url, headers=headers, data=form_data, timeout=20)
         else:
