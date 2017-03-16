@@ -16,7 +16,7 @@ item_info_from=uagent=uagent&p=' + fid + '&id=' + id + '&v=' + cx
 item_info_build=%s
 
 item_info_name=pageUrl
-item_info_from=http://www.zoomtv.me/kembed.php?|'  + postData
+item_info_from=http://www.zoomtv.me/kembed.php?p=' + fid + '&id=' + id + '&v=' + cx|'  + postData
 item_info_build=%s
 
 item_info_name=cookie1
