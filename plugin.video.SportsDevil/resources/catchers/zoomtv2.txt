@@ -3,7 +3,7 @@
 
 item_info_name=tmp
 item_info_from=@PARAM1@
-item_info_convert=parseText('%s','.*v_vid="?(\d+)"?,\s*v_vpp="([^"]+)",\s*v_vpv="([^"]+)".*?zoomtv.*kemp.js','id|fid|cx')
+item_info_convert=parseText('%s','.*v_vid="?([\d\w]+)"?,\s*v_vpp="([^"]+)",\s*v_vpv="([^"]+)".*?zoomtv.*kemp.js','id|fid|cx')
 item_info_build=%s
 
 item_info_name=title
@@ -16,7 +16,7 @@ item_info_from=uagent=uagent&p=' + fid + '&id=' + id + '&v=' + cx
 item_info_build=%s
 
 item_info_name=pageUrl
-item_info_from=http://www.zoomtv.me/kembed.php?p=' + fid + '&id=' + id + '&v=' + cx|'  + postData
+item_info_from=http://www.zoomtv.me/kembed.php?p=' + fid + '&id=' + id + '&v=' + cx + '|'  + postData
 item_info_build=%s
 
 #item_info_name=cookie1
@@ -38,7 +38,7 @@ item_info_build=%s
 
 item_info_name=h0
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*source:\s*"([^"]+)','@REFERER@')
+item_info_convert=getInfo('%s','.*source:\s*"([^"]+)"','@REFERER@')
 item_info_convert=debug
 item_info_build=%s
 

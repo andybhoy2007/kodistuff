@@ -23,6 +23,8 @@ def getAddrInfoWrapper(host, port, family=0, socktype=0, proto=0, flags=0):
 
 # replace the original socket.getaddrinfo by our version
 socket.getaddrinfo = getAddrInfoWrapper
+
+
 #------------------------------------------------------------------------------
 
 '''
@@ -123,15 +125,18 @@ class BaseRequest(object):
                    
                 #headers['Content-Type'] = 'application/x-www-form-urlencoded'
                 #headers['User-Agent'] = self.s.headers['User-Agent']
-                #headers['Content-Length'] = str( len(form_data[0][1]) + len(form_data[1][1]) + len(form_data[2][1]) + len(form_data[3][1]) )
-                #lib.common.log("JairoX10:" + str( len(form_data[0][1]) + len(form_data[1][1]) + len(form_data[2][1]) + len(form_data[3][1]) ))
                 #lib.common.log("JairoX10:" + form_data[0][1])
                
 
             r = self.s.post(url, headers=headers, data=form_data, timeout=20)
         else:
             try:
-                r = self.s.get(url, headers=headers, timeout=20)
+                if 'vipleague' in url or 'strikeout' in url or 'homerun' in url:
+                    verify = False
+                else:
+                    verify = True
+
+                r = self.s.get(url, headers=headers, timeout=20, verify=verify)
             except (requests.exceptions.MissingSchema):
                 return 'pass'
         
