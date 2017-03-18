@@ -229,7 +229,7 @@ def decodeBase64Special(params, src):
             for chunk in chunks:
                 s += base64.decodestring(chunk)
     except:
-        s = ''
+        s = paramstr
     return s
 
 def encodeBase64(src):
