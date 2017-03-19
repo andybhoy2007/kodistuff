@@ -6,4 +6,5 @@ pysrc/
 cache/*
 .project
 .pydevproject
+.vscode/
 *xbmcstubs*
