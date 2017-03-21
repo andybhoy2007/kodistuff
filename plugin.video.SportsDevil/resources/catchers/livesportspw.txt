@@ -9,7 +9,7 @@ item_info_build=http://www.livesports.pw/embed.php?file=%s&height=397&width=650
 
 item_info_name=hls_url
 item_info_from=pUrl
-item_info_convert=getInfo('%s','.*jwplayer.*?file:\s*["']([^'"]+)"','@PARAM1@')
+item_info_convert=getInfo('%s','.*player.*?(?:file|source):\s*["']([^'"]+)["']','@PARAM1@')
 item_info_build=%s
 
 item_info_name=_tmp
