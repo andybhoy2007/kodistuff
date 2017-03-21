@@ -637,7 +637,7 @@ class Parser(object):
                 src = cc.bcast64(src)
 
             elif command == 'replace':
-                src = cc.replace(params, src)
+                src = cc.replace(item, params, src)
 
             elif command == 'replaceRegex':
                 src = cc.replaceRegex(params, src)

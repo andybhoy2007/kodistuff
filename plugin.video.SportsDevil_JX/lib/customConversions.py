@@ -233,8 +233,8 @@ def decodeBase64Special(params, src):
     return s
 
 def encodeBase64(src):
-    from base64 import b64encode
-    return b64encode(src)
+    from base64 import urlsafe_b64encode
+    return urlsafe_b64encode(src)
 
 def decodeRawUnicode(src):
     try:
@@ -246,11 +246,12 @@ def simpleToken(url):
     import requests,zlib
     time = common.getSetting(url+'_time')
     s = requests.Session()
+    s.verify = False
     if time:
         s.headers.update({'If-Modified-Since' : time})
     s.headers.update({'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'})
     s.headers.update({'Referer' : url})
-    r = s.get(url)
+    r = s.get(url, timeout=10)
     if r.status_code == 304:
         return common.getSetting(url+'_token')
     elif r.status_code == 200:
@@ -266,50 +267,30 @@ def simpleToken(url):
       
 def resolve(src):
     try:
+        import random
         parsed_link = urlparse.urlsplit(src)
         tmp_host = parsed_link.netloc.split(':')
         if 'streamlive.to' in tmp_host[0]:
-            servers = ['89.248.169.48',
-                       '94.102.63.54',
-                       '89.248.169.55']
-            import random
+            servers = ['80.82.78.4',
+                       '89.248.168.57',
+                       '93.174.93.230',
+                       '89.248.169.55',
+                       '62.210.139.136']
             tmp_host[0] = random.choice(servers)
         elif tmp_host[0] == 'xlive.sportstream365.com':
             servers = ["185.56.139.162",
                        "93.189.57.254",
-                       "93.189.62.10",
-                       "185.49.70.58",
-                       "46.28.205.96",
-                       "178.17.168.90",
-                       "185.28.190.69",
-                       "85.114.135.215",
-                       "94.242.254.211"]
-            import random
+                       "93.189.62.10"]            
             tmp_host[0] = random.choice(servers)
         elif tmp_host[0] == 'live.pub.stream':
-            servers = [ "195.154.169.244",
-                        "195.154.185.109",
-                        "195.154.179.159",
-                        "195.154.167.95",
-                        "62.210.203.163",
-                        "195.154.168.230",
-                        "62.210.203.170",
-                        "62.210.203.167",
-                        "195.154.173.124",
-                        "195.154.172.90",
-                        "195.154.179.167",
-                        "195.154.177.110",
+            servers =  ["195.154.172.90",
                         "195.154.179.174",
                         "195.154.168.218",
-                        "195.154.185.113",
-                        "195.154.187.46",
-                        "195.154.168.233",
-                        "195.154.187.23",
-                        "195.154.168.222",
-                        "195.154.169.233",
-                        "195.154.169.234",
+                        "62.210.203.170",
+                        "195.154.168.230",
+                        "62.210.203.163",
+                        "195.154.167.95",
                         "195.154.182.101"]
-            import random
             tmp_host[0] = random.choice(servers)
         else:
             tmp_host[0] = socket.gethostbyname(tmp_host[0])
@@ -320,11 +301,13 @@ def resolve(src):
         return src
 
 
-def replace(params, src):
+def replace(item, params, src):
     paramArr = __parseParams(params)
     paramstr = paramArr[0].replace('%s', src)
     paramSrch = paramArr[1]
     paramRepl = paramArr[2]
+    if paramRepl.startswith('@') and paramRepl.endswith('@'):
+        paramRepl = item.getInfo(paramRepl.strip('@'))
     return paramstr.replace(paramSrch,paramRepl)
 
 

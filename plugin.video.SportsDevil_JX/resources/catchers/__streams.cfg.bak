@@ -4,12 +4,12 @@
 ########################################################
 # SopCast - Videos
 ########################################################
-item_infos=sop://[^:]+:3912/(\d+)
+item_infos=(sop://[^:]+:\d+/\d+)
 item_precheck=sop://
 item_order=video
-@CATCH(sopcastp2p,video)@
+@CATCH(sopcast,video)@
 ########################################################
-item_infos=sop://[^:]+:3912/(\d+)
+item_infos=(sop://[^:]+:\d+/\d+)
 item_precheck=sop://
 item_order=video
 @CATCH(sopcastplexus,video)@
@@ -24,11 +24,7 @@ item_order=video
 item_infos=acestream://([^"']+)
 item_precheck=acestream://
 item_order=video
-@CATCH(acestreamp2p,video)@
-########################################################
-item_infos=acestream://([^"']+)
-item_precheck=acestream://
-item_order=video
+
 @CATCH(acestreamplexus,video)@
 #######################################################
 item_infos=this.loadPlayer\("([^"']+)"
@@ -44,26 +40,13 @@ item_order=video
 item_infos=http://torrentstream.(?:net|org)/(?:p|embed)/(\w+)
 item_precheck=torrentstream
 item_order=video
-@CATCH(acestreamp2p,video)@
-#######################################################
-item_infos=http://torrentstream.(?:net|org)/(?:p|embed)/(\w+)
-item_precheck=torrentstream
-item_order=video
+
 @CATCH(acestreamplexus,video)@
 #######################################################
 item_infos=http://([^a]+)acelive
 item_precheck=acelive
 item_order=video
-@CATCH(acestream,'http://' + video + 'acelive')@
-#######################################################
-item_infos=http://([^a]+)acelive
-item_precheck=acelive
-item_order=video
-@CATCH(acestreamp2p,'http://' + video + 'acelive')@
-#######################################################
-item_infos=http://([^a]+)acelive
-item_precheck=acelive
-item_order=video
+
 @CATCH(acestreamplexus,'http://' + video + 'acelive')@
 ########################################################
 item_infos=avod.me/play/([^"']+)
@@ -74,22 +57,12 @@ item_order=video
 item_infos=avod.me/play/([^"']+)
 item_precheck=avod.me
 item_order=video
-@CATCH(acestreamp2p,video)@
-########################################################
-item_infos=avod.me/play/([^"']+)
-item_precheck=avod.me
-item_order=video
 @CATCH(acestreamplexus,video)@
 ########################################################
 item_infos=initAceStreamPlayer\(['"]([^'"]+)
 item_precheck=AceStreamPlayer
 item_order=video
-@CATCH(acelive,video)@
-########################################################
-item_infos=initAceStreamPlayer\(['"]([^'"]+)
-item_precheck=AceStreamPlayer
-item_order=video
-@CATCH(acelivep2p,video)@
+@CATCH(acestream,video)@
 ########################################################
 item_infos=initAceStreamPlayer\(['"]([^'"]+)
 item_precheck=AceStreamPlayer
@@ -99,12 +72,7 @@ item_order=video
 item_infos=playlistLoadAsync\(['"](?!http)([^'"]+)
 item_precheck=acestream
 item_order=video
-@CATCH(acelive,video)@
-########################################################
-item_infos=playlistLoadAsync\(['"](?!http)([^'"]+)
-item_precheck=acestream
-item_order=video
-@CATCH(acelivep2p,video)@
+@CATCH(acestream,video)@
 ########################################################
 item_infos=playlistLoadAsync\(['"](?!http)([^'"]+)
 item_precheck=acestream
@@ -114,22 +82,18 @@ item_order=video
 item_infos=this.loadPlayer\("([^"']+)"
 item_precheck=TorrentStream
 item_order=video
-@CATCH(acestreamp2p,video)@
+@CATCH(acestream,video)@
 #######################################################
 item_infos=this.loadPlayer\("([^"']+)"
 item_precheck=TorrentStream
 item_order=video
 @CATCH(acestreamplexus,video)@
-########################################################p
-item_infos=playlistLoadPlayerAsync\(['"](?!http)([^'"]+)
-item_precheck=acestream
-item_order=video
-@CATCH(acelive,video)@
+
 ########################################################
 item_infos=playlistLoadPlayerAsync\(['"](?!http)([^'"]+)
 item_precheck=acestream
 item_order=video
-@CATCH(acelivep2p,video)@
+@CATCH(acestream,video)@
 ########################################################
 item_infos=playlistLoadPlayerAsync\(['"](?!http)([^'"]+)
 item_precheck=acestream
@@ -146,7 +110,7 @@ item_order=video
 
 item_info_name=title
 item_info_from=video
-item_info_build=StreamTorrent - %s
+item_info_build=StreamTorrent External Player - %s
 
 item_info_name=url
 item_info_from=video
@@ -476,6 +440,7 @@ item_info_build=%s
 item_info_name=type
 item_info_build=video
 item_url_build=%s|User-Agent=Mozilla/5.0 (Windows NT 6.3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.116 Safari/537.36
+########################################################
 
 
 ########################################################
@@ -694,10 +659,10 @@ item_order=video
 ########################################################
 # SawLive - Videos
 ########################################################
-item_infos=src=["']([^\"\']*sawlive.tv/embed/[^"'/]+)
+item_infos=src=["']([^\"\']*sawlive.tv/embedz?/[^"'/]+)
 item_precheck=sawlive.tv
 item_order=video
-@CATCH(ustream3,video)@
+@CATCH(sawlive,video)@
 ########################################################
 item_infos=src=["']([^\"\']*shidurlive.com/v/[^"'/]+)
 item_precheck=shidurlive.com
@@ -745,10 +710,10 @@ item_order=video
 item_infos=byetv.org/channel.php\?file=(\d+)
 item_precheck=byetv.org/channel
 item_order=video
-@CATCH(byetv,'http://www.byetv.org/embed.php?a='+video+'&id=&width=670&height=420&autostart=true&strech=')@
+@CATCH(byetv,'http://byetv.org/embed2.php?a='+video+'&id='+video+'&width=650&height=400&autostart=true&strech=')@
 ########################################################
-item_infos=byetv.org/private/channel.php\?file=(\d+)
-item_precheck=byetv.org/private/channel
+item_infos=byetv.org/2/channel.php\?file=(\d+)
+item_precheck=byetv.org/2/channel
 item_order=video
 @CATCH(byetv,'http://www.byetv.org/2/embed2.php?a='+video+'&id='+video+'&width=670&height=420&autostart=true&strech=')@
 ########################################################
@@ -783,8 +748,8 @@ item_order=video
 ########################################################
 # DinoZap - Videos
 ########################################################
-item_infos=((?:www\.)?dinozap.info/redirect/channel.php\?id=[^"']+)
-item_precheck=dinozap.info/redirect
+item_infos=((?:www\.)?dinozap.tv/redirect/channel.php\?id=[^"']+)
+item_precheck=dinozap.tv/redirect
 item_order=video
 @CATCH(dinozap,video)@
 ########################################################
@@ -851,7 +816,7 @@ item_order=video
 item_infos=((?:www\.)?zombietv.pw\/chan\w+.php\?file=[^"']+)
 item_precheck=zombietv.pw
 item_order=video
-@CATCH(ds,video)@
+@CATCH(dinozap,video)@
 #########################################################
 ################################################################
 #item_infos=((?:www\.)?livesports.pw\/embed.php\?file=[^"']+)
@@ -1029,7 +994,10 @@ item_infos=(fid=.*?\\x7a\\x6f\\x6f\\x6d\\x74\\x76\\x2e\\x6d\\x65)
 item_precheck=fid
 item_order=video
 @CATCH(zoomtv,video)@
-
+########################################################
+item_infos=(v_vid=.*?zoomtv.*kemp.js)
+item_order=video
+@CATCH(zoomtv2,video)@
 ########################################################
 # iGuide - Videos
 ########################################################
@@ -1069,12 +1037,12 @@ item_precheck=iguide.to
 item_infos=channel=(\d+)
 item_precheck=streamlive.to/embed
 item_order=video
-@CATCH(ilive,'http://www.streamlive.to/embed/'+video+'&width=653&height=410&autoplay=true')@
+@CATCH(ilive,'https://www.streamlive.to/embed/'+video+'&width=653&height=410&autoplay=true')@
 ########################################################
 item_infos=streamlive.to/embed/(\d+)&
 item_precheck=streamlive.to/embed
 item_order=video
-@CATCH(ilive,'http://www.streamlive.to/embed/'+video+'&width=653&height=410&autoplay=true')@
+@CATCH(ilive,'https://www.streamlive.to/embed/'+video+'&width=653&height=410&autoplay=true')@
 
 
 ########################################################
@@ -1184,10 +1152,7 @@ item_order=video
 ########################################################
 # Vtrack - Videos
 ########################################################
-@FIND('JS1','[^\"\']*xvtr.pw/embed.js','fid','video')@
-item_precheck=xvtr.pw
-@CATCH(vtrack,video)@
-########################################################
+
 @FIND('JS1','[^\"\']*kolstg.pw/embed.js','fid','video')@
 item_precheck=kolstg.pw
 @CATCH(vtrack,video)@
@@ -1233,10 +1198,10 @@ item_order=video
 ########################################################
 # LiveStream
 ########################################################
-item_infos=(//(?:new\.)?livestream.com[^"]+)
+item_infos=(livestream.com/accounts[^"]+)
 item_precheck=livestream.com
 item_order=video
-@CATCH(livestreamnew,'http:'+video+'')@
+@CATCH(livestreamnew,video)@
 
 ########################################################
 # laola1
@@ -1295,7 +1260,7 @@ item_precheck=jazztv.co
 ########################################################
 @FIND('JS1','[^\"\']*rocktv.co[^\"\']*','f*id','video')@
 item_precheck=rocktv.co
-@CATCH(rocktv,'http://www.rocktv.co/embedhd.php?live='+video+'&vw=650&vh=390')@
+@CATCH(rocktv,'http://www.rocktv.co/embed.php?live='+video+'&vw=650&vh=390')@
 ########################################################
 item_infos=(http://(?:www.)?rocktv.co/embed[^'"\s]+)
 item_precheck=rocktv.co
@@ -1362,12 +1327,12 @@ item_precheck=biggestplayer.me
 item_order=video
 @CATCH(biggestplayer,video)@
 ########################################################
-item_infos=>id='([^\"\'].*?)'.*theactionlive.com/livegame[^\"\']*'>
+item_infos=>(id='[^\"\'].*theactionlive.com/livegame[^\"\']*)'>
 item_precheck=theactionlive.com
 item_order=video
 @CATCH(theactionlive,video)@
 ########################################################
-item_infos=>id='([^\"\'].*?)'.*soccerschedule.online/livegame[^\"\']*'>
+item_infos=>(id='[^\"\'].*soccerschedule.online/livegame[^\"\']*)'>
 item_precheck=soccerschedule.online
 item_order=video
 @CATCH(theactionlive,video)@
@@ -1386,6 +1351,11 @@ item_precheck=hdcast.info
 ########################################################
 item_infos=src="(http://(?:www\.)?miplayer.net/embed[^'"]+)
 item_precheck=miplayer.net
+item_order=video
+@CATCH(iptvhq,video)@
+########################################################
+item_infos=src="(http://(?:www\.)?hdca.st/embed[^'"]+)
+item_precheck=hdca.st
 item_order=video
 @CATCH(hdcastme,video)@
 ########################################################
@@ -1636,6 +1606,11 @@ item_precheck=livesport.pw
 item_order=video
 @CATCH(livesport,video)@
 ########################################################
-@FIND('JS1','[^\"\']*soccerschedule.online[^\"\']*','f*id','video')@
-item_precheck=soccerschedule.online
-@CATCH(theactionlive,video)@
+item_infos=(http://realsport.website(?!&#)[^"']+)
+item_precheck=realsport.website
+item_order=video
+@CATCH(livesport,video)@
+########################################################
+#@FIND('JS1','[^\"\']*soccerschedule.online[^\"\']*','f*id','video')@
+#item_precheck=soccerschedule.online
+#@CATCH(theactionlive,video)@
