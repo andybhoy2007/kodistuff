@@ -9,7 +9,7 @@ try: import json
 except ImportError: import simplejson as json
 try: from Crypto.Cipher import AES
 except ImportError: import pyaes as AES
-#import lib.common
+import lib.common
 
 def encryptDES_ECB(data, key):
     data = data.encode()
@@ -348,7 +348,9 @@ def doDemystify(data):
     if JsHive.contains_hivelogic(data):
         data = JsHive.unpack_hivelogic(data)
 
-    try: data = zdecode(data)
+    try: 
+        data = zdecode(data)
+        lib.common.log("JairoXZdec:" + data)
     except: pass
     # unescape again
     if escape_again:
