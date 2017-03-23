@@ -656,14 +656,13 @@ item_precheck=dotstream.tv/pl
 item_order=video
 @CATCH(dotstream,video)@
 
-
 ########################################################
 # SawLive - Videos
 ########################################################
 item_infos=src=["']([^\"\']*sawlive.tv/embedz?/[^"'/]+)
 item_precheck=sawlive.tv
 item_order=video
-@CATCH(ustream3,video)@
+@CATCH(sawlive,video)@
 ########################################################
 item_infos=src=["']([^\"\']*shidurlive.com/v/[^"'/]+)
 item_precheck=shidurlive.com
@@ -679,7 +678,6 @@ item_infos=javascript["']\s*src=["']sw([^"']+)["']
 item_precheck=live9.net
 item_order=video
 @CATCH(ustream3,'http://www.sawlive.tv/embed/'+ video +'')@
-
 
 ########################################################
 # 3live - Videos
@@ -703,6 +701,7 @@ item_infos=castup.tv/embed_*\d*.php\?channel=([^&]+)
 item_precheck=castup.tv
 item_order=video
 @CATCH(castup,video)@
+
 
 
 ########################################################
@@ -972,12 +971,17 @@ item_precheck=zony.tv/static
 @FIND('JS1','[^\"\']*zati.tv[^\"\']*','channel','video')@
 item_precheck=zati.tv
 @CATCH(zati,video)@
+
+
+
 ########################################################
 # LiveStreamCast - Videos
 ########################################################
 @FIND('JS1','[^\"\']*livestreamcast.org[^\"\']*','fid','video')@
 item_precheck=livestreamcast.org
 @CATCH(livestreamcast,video)@
+
+
 ########################################################
 # ZoomTV - Videos
 ########################################################
@@ -991,13 +995,7 @@ item_precheck=fid
 item_order=video
 @CATCH(zoomtv,video)@
 ########################################################
-#item_infos=(v_vid=.*?zoomtv.*kemp.js)
-#item_precheck=zoomtv.me
-#item_order=video
-#@CATCH(zoomtv2,video)@
-########################################################
-item_infos=>\s*(v_.*?zoomtv.me/js/k)
-item_precheck=zoomtv.me/js/k
+item_infos=(v_vid=.*?zoomtv.*kemp.js)
 item_order=video
 @CATCH(zoomtv2,video)@
 ########################################################
@@ -1616,4 +1614,3 @@ item_order=video
 #@FIND('JS1','[^\"\']*soccerschedule.online[^\"\']*','f*id','video')@
 #item_precheck=soccerschedule.online
 #@CATCH(theactionlive,video)@
-

@@ -215,9 +215,10 @@ class ThreadedHTTPServer(ThreadingMixIn, Server):
     """Handle requests in a separate thread."""
 
 
-HOST_NAME = '127.1.2.3'
-PORT_NUMBER = 45678
-
+# HOST_NAME = '127.1.2.3'
+# PORT_NUMBER = 45678
+HOST_NAME = '127.0.0.1'
+PORT_NUMBER = 19001
 if __name__ == '__main__':
     sys.stderr = sys.stdout
     server_class = ThreadedHTTPServer
@@ -225,3 +226,4 @@ if __name__ == '__main__':
     while not xbmc.abortRequested:
         httpd.handle_request()
     httpd.server_close()
+    httpd.stopped = True

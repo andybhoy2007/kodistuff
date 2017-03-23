@@ -637,7 +637,7 @@ class Parser(object):
                 src = cc.bcast64(src)
 
             elif command == 'replace':
-                src = cc.replace(item, params, src)
+                src = cc.replace(params, src)
 
             elif command == 'replaceRegex':
                 src = cc.replaceRegex(params, src)
@@ -726,7 +726,7 @@ class Parser(object):
             elif command == 'debug':
                 common.log('Debug from cfg file: ' + src)
                 
-            elif command == 'startLivestreamerProxy':                  
+            elif command == 'startLivestreamerProxy':
                 libPath = os.path.join(common.Paths.rootDir, 'lib')
                 serverPath = os.path.join(libPath, 'livestreamerXBMCLocalProxy.py')
                 try:
@@ -737,20 +737,7 @@ class Parser(object):
                     proxyIsRunning = False
                 if not proxyIsRunning:
                     xbmc.executebuiltin('RunScript(' + serverPath + ')')
-
-            elif command == 'startLivestreamerProxyEnc':
-                libPath = os.path.join(common.Paths.rootDir, 'service')
-                serverPath = os.path.join(libPath, 'proxy_service.py')
-                try:
-                    import requests
-                    requests.get('http://127.0.0.1:19001/version')
-                    proxyIsRunning = True
-                except:
-                    proxyIsRunning = False
-                if not proxyIsRunning:
-                    xbmc.executebuiltin('RunScript(' + serverPath + ')')                
-                #common.log('Debug from cfg file: ' + requests.get('http://127.0.0.1:19001/version').text)      
-
+                
             elif command == 'divide':
                 paramArr = params.split(',')
                 a = paramArr[0].strip().strip("'").replace('%s', src)
