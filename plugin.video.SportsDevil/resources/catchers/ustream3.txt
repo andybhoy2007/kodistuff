@@ -83,8 +83,30 @@ item_info_from=tmpUrl
 item_info_convert=getInfo('%s','.*\s*=\s*["'](%[^"']+)["']','@REFERER@')
 item_info_build=%s
 
+item_info_name=file1_
+item_info_from=f1
+item_info_convert=ifEmpty('%s','','%s?')
+item_info_build=%s
+
+item_info_name=file1
+item_info_from=file1_+t+sp2
+item_info_build=%s
+
+item_info_name=tmp2
+item_info_from=tmpUrl
+item_info_convert=getInfo('%s','.*?id="jwplayer.*?object.*?"(http.*swf)".*?file=([^&]+)&streamer=([^&]+)','@REFERER@','swf2|file2|rtmp2')
+item_info_build=%s
+
+item_info_name=file
+item_info_from=file1 || file2
+item_info_build=%s
+
+item_info_name=swf
+item_info_from=swf1 || swf2
+item_info_build=%s
+
 item_info_name=rtmp_url
-item_info_from=rtmp://'+rtmp+'/flash playpath=' + file + '?'+t+sp2+' swfVfy=1 flashver=WIN\2024,0,0,221 timeout=25 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
+item_info_from=rtmp://'+ rtmp +'/flash playpath=' + file + ' swfVfy=1 flashver=WIN\2024,0,0,221 timeout=25 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
 item_info_build=%s
 
 item_info_name=url
