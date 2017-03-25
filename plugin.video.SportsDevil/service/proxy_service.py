@@ -84,7 +84,7 @@ def create_decryptor(self, key, sequence):
                 uri = urljoin(saw_key,'/m/streams?ci='+_tmp[-3]+'&k='+_tmp[-1])
         else:
             uri = key.uri
-
+        
         res = self.session.http.get(uri, exception=StreamError,
                                     **self.reader.request_params)
         self.key_data = res.content
@@ -171,14 +171,16 @@ class MyHandler(BaseHTTPRequestHandler):
         if '|' in fURL:
                 sp = fURL.split('|')
                 fURL = sp[0]
-                headers = dict(urlparse.parse_qsl(sp[1]))
+                headers = dict(urlparse.parse_qsl(sp[1]))                
                 session.set_option("http-headers", headers)
                 session.set_option("http-ssl-verify", False)
                 session.set_option("hls-segment-threads", 1)
                 if 'zoomtv' in headers['Referer']:
-                    session.set_option("zoom-key", headers['Referer'].split('?')[1]+"&vw=1&s=")
+                    vw = sp[2]
+                    session.set_option("zoom-key", headers['Referer'].split('?')[1]+"&vw="+vw+"&s=")
                 elif 'sawlive' in headers['Referer']:
                     session.set_option("saw-key", headers['Referer'])
+                
         try:
             streams = session.streams(fURL)
             self.send_response(200)
@@ -215,8 +217,8 @@ class ThreadedHTTPServer(ThreadingMixIn, Server):
     """Handle requests in a separate thread."""
 
 
-# HOST_NAME = '127.1.2.3'
-# PORT_NUMBER = 45678
+#HOST_NAME = '127.1.2.3'
+#PORT_NUMBER = 45678
 HOST_NAME = '127.0.0.1'
 PORT_NUMBER = 19001
 if __name__ == '__main__':
