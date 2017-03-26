@@ -350,7 +350,6 @@ def doDemystify(data):
 
     try: 
         data = zdecode(data)
-        lib.common.log("JairoXZdec:" + data)
     except: pass
     # unescape again
     if escape_again:

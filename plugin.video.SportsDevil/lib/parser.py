@@ -726,8 +726,20 @@ class Parser(object):
             elif command == 'debug':
                 common.log('Debug from cfg file: ' + src)
                 
-            elif command == 'startLivestreamerProxy':                  
-                libPath = os.path.join(common.Paths.rootDir, 'lib')
+            # elif command == 'startLivestreamerProxy':                  
+            #     libPath = os.path.join(common.Paths.rootDir, 'lib')
+            #     serverPath = os.path.join(libPath, 'livestreamerXBMCLocalProxy.py')
+            #     try:
+            #         import requests
+            #         requests.get('http://127.0.0.1:19000/version')
+            #         proxyIsRunning = True
+            #     except:
+            #         proxyIsRunning = False
+            #     if not proxyIsRunning:
+            #         xbmc.executebuiltin('RunScript(' + serverPath + ')')
+
+            elif command == 'startLivestreamerProxy':
+                libPath = os.path.join(common.Paths.rootDir, 'service')
                 serverPath = os.path.join(libPath, 'livestreamerXBMCLocalProxy.py')
                 try:
                     import requests
@@ -736,20 +748,8 @@ class Parser(object):
                 except:
                     proxyIsRunning = False
                 if not proxyIsRunning:
-                    xbmc.executebuiltin('RunScript(' + serverPath + ')')
-
-            elif command == 'startLivestreamerProxyEnc':
-                libPath = os.path.join(common.Paths.rootDir, 'service')
-                serverPath = os.path.join(libPath, 'proxy_service.py')
-                try:
-                    import requests
-                    requests.get('http://127.0.0.1:19001/version')
-                    proxyIsRunning = True
-                except:
-                    proxyIsRunning = False
-                if not proxyIsRunning:
                     xbmc.executebuiltin('RunScript(' + serverPath + ')')                
-                #common.log('Debug from cfg file: ' + requests.get('http://127.0.0.1:19001/version').text)      
+            #     common.log('Debug from cfg file: ' + requests.get('http://127.0.0.1:19001/version').text)      
 
             elif command == 'divide':
                 paramArr = params.split(',')

@@ -1,6 +1,7 @@
 *.lwp
 *.pyc
 *.pyo
+*.bak
 .settings
 pysrc/
 cache/*
