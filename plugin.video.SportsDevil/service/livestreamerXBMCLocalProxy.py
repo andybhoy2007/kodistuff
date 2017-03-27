@@ -36,6 +36,7 @@ from urlparse import urljoin
 ##aes stuff
 _android_ssl = False
 _oscrypto = False
+CAN_DECRYPT = True
 try:
     from Crypto.Cipher import AES
 except ImportError:
@@ -47,14 +48,17 @@ except ImportError:
             enc = androidsslPy._load_crypto_libcrypto()
             _android_ssl = True
         except:
-            from oscrypto.symmetric import aes_cbc_no_padding_decrypt
-            class AES(object):
-                def __init__(self,key,iv):
-                    self.key=key
-                    self.iv=iv
-                def decrypt(self, data):
-                    return aes_cbc_no_padding_decrypt(self.key, data, self.iv)
-            _oscrypto = True
+            try:
+                from oscrypto.symmetric import aes_cbc_no_padding_decrypt
+                class AES(object):
+                    def __init__(self,key,iv):
+                        self.key=key
+                        self.iv=iv
+                    def decrypt(self, data):
+                        return aes_cbc_no_padding_decrypt(self.key, data, self.iv)
+                _oscrypto = True
+            except:
+                CAN_DECRYPT = False
 
 def num_to_iv(n):
     return struct.pack(">8xq", n)
@@ -103,6 +107,9 @@ def process_sequences(self, playlist, sequences):
 
     if first_sequence.segment.key and first_sequence.segment.key.method != "NONE":
         self.logger.debug("Segments in this playlist are encrypted")
+    
+    if not CAN_DECRYPT:
+        raise StreamError("No crypto lib installed to decrypt this stream")
 
     self.playlist_changed = ([s.num for s in self.playlist_sequences] !=
                                 [s.num for s in sequences])

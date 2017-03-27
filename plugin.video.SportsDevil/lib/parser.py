@@ -748,7 +748,8 @@ class Parser(object):
                 except:
                     proxyIsRunning = False
                 if not proxyIsRunning:
-                    xbmc.executebuiltin('RunScript(' + serverPath + ')')                
+                    xbmc.executebuiltin('RunScript(' + serverPath + ')')
+                    #xbmc.sleep(500)                
             #     common.log('Debug from cfg file: ' + requests.get('http://127.0.0.1:19001/version').text)      
 
             elif command == 'divide':
