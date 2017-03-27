@@ -28,7 +28,7 @@ item_info_build=%s
 
 item_info_name=codes
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*iscache="(.*?)".*?mpegurl.*?onload.*?window.atob\('([^'"]+)['"]','@REFERER@','cache|code2_')
+item_info_convert=getInfo('%s','.*iscache="(.*?)".*?mpegurl.*?onload.*window\.atob\('([^'"]+)['"]\);loadPlayer','@REFERER@','cache|code2_')
 item_info_build=%s
 
 item_info_name=code2

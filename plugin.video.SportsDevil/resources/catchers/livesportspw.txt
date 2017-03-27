@@ -7,14 +7,39 @@ item_info_from=@PARAM1@
 item_info_build=http://www.livesports.pw/embed.php?file=%s&height=397&width=650
 #item_info_convert=debug
 
-item_info_name=hls_url
+
+item_info_name=hls_url1
 item_info_from=pUrl
-item_info_convert=getInfo('%s','.*player.*?(?:file|source):\s*["']([^'"]+)["']','@PARAM1@')
+item_info_convert=getInfo('%s','.*player.*?(?:file|source):\s*['"](http:\/\/(?!edge).*?)["']','@REFERER@')
+#item_info_convert=debug
 item_info_build=%s
+
+
+item_info_name=hls_url_
+item_info_from=pUrl
+item_info_convert=getInfo('%s','.*player.*?(?:file|source):\s*['"]http://edge\d+(.*?)["']','@REFERER@')
+#item_info_convert=replaceRegex('%s','http://edge\d+','')
+#item_info_convert=debug
+item_info_build=%s
+
+item_info_name=host
+item_info_from=pUrl
+item_info_convert=random(10,12)
+item_info_build=http://edge%s
+
+item_info_name=hls_url2
+item_info_from=host+hls_url_
+item_info_build=%s
+
+item_info_name=hls_url
+item_info_from=hls_url1 || hls_url2
+#item_info_convert=debug
+item_info_build=%s
+
 
 item_info_name=_tmp
 item_info_from=pUrl
-item_info_convert=getInfo('%s','.*["'](rtmp:\/\/.*\/(?:redirect|live).*?\/)(\w+)["']','@PARAM1@','r|p')
+item_info_convert=getInfo('%s','.*["'](rtmp:\/\/.*\/(?:redirect|live).*?\/)(\w+)["']','@REFERER@','r|p')
 item_info_build=%s
 
 item_info_name=rtmp_url
