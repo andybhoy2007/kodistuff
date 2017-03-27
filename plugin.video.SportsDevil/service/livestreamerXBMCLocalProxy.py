@@ -108,8 +108,8 @@ def process_sequences(self, playlist, sequences):
     if first_sequence.segment.key and first_sequence.segment.key.method != "NONE":
         self.logger.debug("Segments in this playlist are encrypted")
     
-    if not CAN_DECRYPT:
-        raise StreamError("No crypto lib installed to decrypt this stream")
+        if not CAN_DECRYPT:
+            raise StreamError("No crypto lib installed to decrypt this stream")
 
     self.playlist_changed = ([s.num for s in self.playlist_sequences] !=
                                 [s.num for s in sequences])
@@ -172,6 +172,7 @@ class MyHandler(BaseHTTPRequestHandler):
     """
     def serveFile(self, fURL, sendData):
         session = livestreamer.session.Livestreamer()
+        #session.set_loglevel('debug')
         livestreamer.stream.hls.HLSStreamWriter.create_decryptor = create_decryptor
         livestreamer.stream.hls.HLSStreamWorker.process_sequences = process_sequences
 
