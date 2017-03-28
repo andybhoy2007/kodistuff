@@ -21,39 +21,24 @@ item_info_name=pageUrl2
 item_info_from=http://www.zoomtv.me/kembed.php?p='+pp+'&id='+id+'&v='+pv
 item_info_build=%s
 
-item_info_name=code1
-item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*(?:src|source):.*?['"](http.*?\.m3u8)['"]','@REFERER@')
-item_info_build=%s
-
-item_info_name=codes
-item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*iscache="(.*?)".*?mpegurl.*?onload.*window\.atob\('([^'"]+)['"]\);loadPlayer','@REFERER@','cache|code2_')
-item_info_build=%s
-
-item_info_name=code2
-item_info_from=code2_
-item_info_convert=decodeBase64
-item_info_convert=debug
-item_info_build=%s
-
 item_info_name=p_file
-item_info_from=code1||code2
-item_info_convert=parseText('%s','.*(http:.*(?:periscope|aeuf1).*\.m3u8)')
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*(http[^"']+(?:periscope|aeuf1)[^"']+\.m3u8[^"',\}]*).*','@REFERER@')
 item_info_build=%s
 
-item_info_name=file
-item_info_from=code1||code2
-item_info_convert=parseText('%s','.*(http:.*\.m3u8)')
+item_info_name=tmp_
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*iscache\s*=\s*"(\w+)".*['"](http[^"']+\.m3u8.*?)['"].*?loadPlayer','@REFERER@','iscache|file')
 item_info_build=%s
 
 item_info_name=ref
-item_info_from=pageUrl2
+item_info_from=pageUrl2+'&vw='+iscache+'&s=
 item_info_convert=quote(%s)
 item_info_build=%s
 
 item_info_name=url4
-item_info_from=hlsvariant://'+file+'|Referer='+ref+'&User-Agent=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML,%20like%20Gecko)%20Chrome%2F56.0.2924.87%20Safari%2F537.36|'+cache
+item_info_from=hlsvariant://'+file+'|Referer='+ref+'&User-Agent=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML,%20like%20Gecko)%20Chrome%2F56.0.2924.87%20Safari%2F537.36
+item_info_convert=debug
 item_info_convert=encodeBase64
 item_info_build=%s
 

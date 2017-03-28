@@ -235,12 +235,16 @@ def doDemystify(data):
             data = data.replace(g, res)
 
     #sebn
-    r = re.compile(r"""(?:file|src|source):\s*(window\.atob\(['"][^'"]+['"]\))""")
+    #(?:file\s*:|source\s*:|src\s*:|\w+=)\s*(window\.atob\(['"][^'"]+['"]\))
+    #"""(?:file:|source:|\w+=)\s*(window\.atob\(['"][^'"]+['"]\))"""
+    r = re.compile('(?:file\s*:|source\s*:|src\s*:|\w+=)\s*(window\.atob\([\'"][^\'"]+[\'"]\))')
+    #lib.common.log("JairoXDecrypt: " + data)
     if r.findall(data):
         for g in r.findall(data):
-            r2 = re.compile(r"""window\.atob\(['"]([^'"]+)['"]\)""")
+            #r"""window\.atob\(['"]([^'"]+)['"]\)"""
+            r2 = re.compile('window\.atob\([\'"]([^\'"]+)[\'"]\)')
             for base64_data in r2.findall(g):
-                data = data.replace(g, urllib.unquote(base64_data.decode('base-64')))
+                data = data.replace(g, '"'+urllib.unquote(base64_data.decode('base-64')+'"'))
 
     #r = re.compile('((?:eval\(decodeURIComponent\(|window\.)atob\([\'"][^\'"]+[\'"]\)+)')
     #while r.findall(data):
@@ -350,6 +354,7 @@ def doDemystify(data):
 
     try: 
         data = zdecode(data)
+        escape_again=True
     except: pass
     # unescape again
     if escape_again:

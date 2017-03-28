@@ -71,9 +71,10 @@ def create_decryptor(self, key, sequence):
         raise StreamError("Missing URI to decryption key")
 
     if self.key_uri != key.uri:
-
         zoom_key = self.reader.stream.session.options.get("zoom-key")
         saw_key = self.reader.stream.session.options.get("saw-key")
+        your_key = self.reader.stream.session.options.get("your-key")
+
         if zoom_key:
             uri = 'http://www.zoomtv.me/k.php?q='+base64.urlsafe_b64encode(zoom_key+base64.urlsafe_b64encode(key.uri))
         elif saw_key:
@@ -86,6 +87,19 @@ def create_decryptor(self, key, sequence):
             elif 'nhl.com' in key.uri:
                 _tmp = key.uri.split('/')
                 uri = urljoin(saw_key,'/m/streams?ci='+_tmp[-3]+'&k='+_tmp[-1])
+        
+        elif your_key:
+            if 'mlb.com' in key.uri:
+                _tmp = key.uri.split('?')
+                uri = urljoin(your_key,'/mlb/get_key/'+_tmp[-1])
+            elif 'espn3/auth' in key.uri:
+                _tmp = key.uri.split('?')
+                uri = urljoin(your_key,'/ncaa/get_key/'+_tmp[-1])
+            elif 'nhl.com' in key.uri:
+                _tmp = key.uri.split('nhl.com/')
+                uri = urljoin(your_key,'/nhl/get_key/'+_tmp[-1])
+            else:
+                uri = key.uri
         else:
             uri = key.uri
         
@@ -184,10 +198,11 @@ class MyHandler(BaseHTTPRequestHandler):
                 session.set_option("http-ssl-verify", False)
                 session.set_option("hls-segment-threads", 1)
                 if 'zoomtv' in headers['Referer']:
-                    vw = sp[2]
-                    session.set_option("zoom-key", headers['Referer'].split('?')[1]+"&vw="+vw+"&s=")
+                    session.set_option("zoom-key", headers['Referer'].split('?')[1])
                 elif 'sawlive' in headers['Referer']:
                     session.set_option("saw-key", headers['Referer'])
+                elif 'yoursportsinhd' in headers['Referer']:
+                    session.set_option("your-key", headers['Referer'])
                 
         try:
             streams = session.streams(fURL)
@@ -207,18 +222,18 @@ class MyHandler(BaseHTTPRequestHandler):
 
 class Server(HTTPServer):
     """HTTPServer class with timeout."""
-
-    def get_request(self):
-        """Get the request and client address from the socket."""
-        self.socket.settimeout(2.0)
-        result = None
-        while result is None:
-            try:
-                result = self.socket.accept()
-            except socket.timeout:
-                pass
-        result[0].settimeout(1000)
-        return result
+    timeout = 5
+    # def get_request(self):
+    #     """Get the request and client address from the socket."""
+    #     self.socket.settimeout(2.0)
+    #     result = None
+    #     while result is None:
+    #         try:
+    #             result = self.socket.accept()
+    #         except socket.timeout:
+    #             pass
+    #     result[0].settimeout(1000)
+    #     return result
 
 
 class ThreadedHTTPServer(ThreadingMixIn, Server):
