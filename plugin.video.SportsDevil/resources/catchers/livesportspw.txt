@@ -24,7 +24,7 @@ item_info_build=%s
 
 item_info_name=host
 item_info_from=pUrl
-item_info_convert=random(10,12)
+item_info_convert=random(10,15)
 item_info_build=http://edge%s
 
 item_info_name=hls_url2
@@ -36,6 +36,11 @@ item_info_from=hls_url1 || hls_url2
 #item_info_convert=debug
 item_info_build=%s
 
+item_info_name=cookie1
+item_info_from=pUrl
+item_info_convert=getCookies(HstCfa3723712)
+#item_info_convert=debug
+item_info_build=%s
 
 item_info_name=_tmp
 item_info_from=pUrl

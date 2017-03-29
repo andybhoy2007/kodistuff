@@ -237,8 +237,8 @@ def doDemystify(data):
     #sebn
     #(?:file\s*:|source\s*:|src\s*:|\w+=)\s*(window\.atob\(['"][^'"]+['"]\))
     #"""(?:file:|source:|\w+=)\s*(window\.atob\(['"][^'"]+['"]\))"""
-    r = re.compile('(?:file\s*:|source\s*:|src\s*:|\w+=)\s*(window\.atob\([\'"][^\'"]+[\'"]\))')
-    lib.common.log("JairoXDecrypt: " + data)
+    r = re.compile('(?:file\s*:|source\s*:|src\s*:|\w+\s*=)\s*(window\.atob\([\'"][^\'"]+[\'"]\))')
+    #lib.common.log("JairoXDecrypt: " + data)
     if r.findall(data):
         for g in r.findall(data):
             #r"""window\.atob\(['"]([^'"]+)['"]\)"""
@@ -354,6 +354,7 @@ def doDemystify(data):
 
     try: 
         data = zdecode(data)
+        escape_again=True
     except: pass
     # unescape again
     if escape_again:

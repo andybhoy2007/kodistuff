@@ -278,9 +278,7 @@ def resolve(src):
                        '62.210.139.136']
             tmp_host[0] = random.choice(servers)
         elif tmp_host[0] == 'xlive.sportstream365.com':
-            servers = ["185.56.139.162",
-                       "93.189.57.254",
-                       "93.189.62.10"]            
+            servers = ["91.192.80.210","93.189.57.254","93.189.62.10"]
             tmp_host[0] = random.choice(servers)
         elif tmp_host[0] == 'live.pub.stream':
             servers =  ["195.154.172.90",

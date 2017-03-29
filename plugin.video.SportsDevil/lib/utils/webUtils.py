@@ -94,14 +94,7 @@ class BaseRequest(object):
         if xml:
             headers['X-Requested-With'] = 'XMLHttpRequest'
             
-        #if 'dinozap.info' in urlparse.urlsplit(url).netloc:
-            #headers['X-Forwarded-For'] = '178.162.222.111'
-        #if 'playerhd2.pw' in urlparse.urlsplit(url).netloc:
-            #headers['X-Forwarded-For'] = '178.162.222.121'
-        #if 'playerhd1.pw' in urlparse.urlsplit(url).netloc:
-            #headers['X-Forwarded-For'] = '178.162.222.121'
-            #lib.common.log("JairoX10:" + url)
-        
+              
         if 'cndhlsstream.pw' in urlparse.urlsplit(url).netloc:
             del self.s.headers['Accept-Encoding']
         if 'skstream.tv' in urlparse.urlsplit(url).netloc:
@@ -119,9 +112,10 @@ class BaseRequest(object):
         
         if 'streamlive.to' in urlparse.urlsplit(url).netloc:
             self.s.verify = False
+
         if 'vipleague' in url or 'strikeout' in url or 'homerun' in url:
             self.s.verify = False
-        
+
         if form_data:
             #zo**tv
             if 'uagent' in form_data[0]:

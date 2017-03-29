@@ -5,7 +5,7 @@ item_info_build=nohead
 item_info_name=qs
 item_info_from=@PARAM1@
 item_info_convert=parseText('%s','.*v_vid="?([\d\w]+)"?,\s*v_vpp="([^"]+)",\s*v_vpv="([^"]+)"\s*;','id|pp|pv')
-item_info_convert=startLivestreamerProxy
+#item_info_convert=startLivestreamerProxy
 item_info_build=%s
 
 item_info_name=postData
@@ -28,7 +28,7 @@ item_info_build=%s
 
 item_info_name=tmp_
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*iscache\s*=\s*"(\w+)".*['"](http[^"']+\.m3u8.*?)['"].*?loadPlayer','@REFERER@','iscache|file')
+item_info_convert=getInfo('%s','.*iscache\s*=\s*"(\w+)".*function\s+(\w+).*['"](http[^"']+\.m3u8.*?)['"].*\2','@REFERER@','iscache|junk|file')
 item_info_build=%s
 
 item_info_name=ref
@@ -43,8 +43,8 @@ item_info_convert=encodeBase64
 item_info_build=%s
 
 item_info_name=ls_url
-item_info_from=http://127.0.0.1:19000/livestreamer/'+url4+'
-#item_info_from=http://127.1.2.3:45678/livestreamer/'+url4+'
+#item_info_from=http://127.0.0.1:19000/livestreamer/'+url4+'
+item_info_from=http://127.1.2.3:45678/livestreamer/'+url4+'
 item_info_build=%s
 
 item_info_name=url

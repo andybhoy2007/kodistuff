@@ -237,7 +237,7 @@ def doDemystify(data):
     #sebn
     #(?:file\s*:|source\s*:|src\s*:|\w+=)\s*(window\.atob\(['"][^'"]+['"]\))
     #"""(?:file:|source:|\w+=)\s*(window\.atob\(['"][^'"]+['"]\))"""
-    r = re.compile('(?:file\s*:|source\s*:|src\s*:|\w+=)\s*(window\.atob\([\'"][^\'"]+[\'"]\))')
+    r = re.compile('(?:file\s*:|source\s*:|src\s*:|\w+\s*=)\s*(window\.atob\([\'"][^\'"]+[\'"]\))')
     #lib.common.log("JairoXDecrypt: " + data)
     if r.findall(data):
         for g in r.findall(data):
@@ -297,14 +297,13 @@ def doDemystify(data):
                 if '\\' in g[0]:
                     data = data.replace(g[0].lower(),g[1])
                 data = data.replace(g[0],g[1])
-
-    # util.de
-    if 'Util.de' in data:
-        r = re.compile("Util.de\(unescape\(['\"](.+?)['\"]\)\)")
+        r = re.compile(r""".replace\(["'](...[^"']+)["'],\s*["']([^"']*)["']\)""")
         gs = r.findall(data)
         if gs:
             for g in gs:
-                data = data.replace(g,g.decode('base64'))
+                if '\\' in g[0]:
+                    data = data.replace(g[0].lower(),g[1])
+                data = data.replace(g[0],g[1])
 
     # 24cast
     if 'destreamer(' in data:
