@@ -3,13 +3,13 @@ item_info_build=nohead
 
 item_info_name=p0z_
 item_info_from=@PARAM1@
-item_info_convert=getInfo('%s','.*.*src="(http:\/\/www3?.sawlive.tv\/embe\w+\/).*?(\w+)"','@REFERER@','u1|u2')
+item_info_convert=getInfo('%s','.*src="(http:\/\/www3?.sawlive.tv\/embe\w+\/).*?(\w+)"','@REFERER@','u1|u2')
 #item_info_convert=startLivestreamerProxy
 item_info_build=%s
 
 item_info_name=p0z
 item_info_from=u1+u2
-item_info_convert=debug
+#item_info_convert=debug
 item_info_build=%s
 
 item_info_name=p0
@@ -18,7 +18,7 @@ item_info_convert=getInfo('%s','.*src="(http://\w+.sawlive.tv/embed\w+/[^"]+)"',
 item_info_build=%s
 
 item_info_name=ref
-item_info_from=p0
+item_info_from=p0 
 item_info_convert=quote(%s)
 item_info_build=%s
 

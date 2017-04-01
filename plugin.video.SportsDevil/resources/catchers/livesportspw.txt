@@ -7,13 +7,17 @@ item_info_from=@PARAM1@
 item_info_build=http://www.livesports.pw/embed.php?file=%s&height=397&width=650
 #item_info_convert=debug
 
+item_info_name=php
+item_info_from=http://www.livesports.pw/embedPlayer2.js'+
+item_info_convert=getInfo('%s','.*','@REFERER@')
+#item_info_convert=debug
+item_info_build=%s
 
 item_info_name=hls_url1
 item_info_from=pUrl
 item_info_convert=getInfo('%s','.*player.*?(?:file|source):\s*['"](http:\/\/(?!edge).*?)["']','@REFERER@')
 #item_info_convert=debug
 item_info_build=%s
-
 
 item_info_name=hls_url_
 item_info_from=pUrl
@@ -24,7 +28,7 @@ item_info_build=%s
 
 item_info_name=host
 item_info_from=pUrl
-item_info_convert=random(10,15)
+item_info_convert=random(14,15)
 item_info_build=http://edge%s
 
 item_info_name=hls_url2
