@@ -128,7 +128,7 @@ def getSource(params, src):
 
     paramPage = paramPage.replace('%s', src)
     data = common.getHTML(paramPage, None, paramReferer)
-    #common.log('JairoX0:' + data)
+    #common.log('JairoXGetSource:' + data)
     return data
 
 

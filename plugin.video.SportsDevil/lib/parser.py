@@ -5,6 +5,7 @@ import time
 import random
 import re
 import urllib
+import urlparse
 import string
 import xbmc
 from string import lower
@@ -158,18 +159,26 @@ class Parser(object):
     def __loadRemote(self, inputList, lItem):
 
         try:
+            
+            form_data = None
+            postData = ''
+            parts = lItem['url'].split('|')
+            url = parts[0]
+            lItem['url'] = url
+            if len(parts) > 1:
+                postData = parts[1]
+                form_data = urlparse.parse_qsl(postData)
             inputList.curr_url = lItem['url']
-
             count = 0
             i = 1
             maxits = 2      # 1 optimistic + 1 demystified
-            ignoreCache = False
+            ignoreCache = False if postData == '' else True
             demystify = False
             back = ''
             startUrl = inputList.curr_url
             while count == 0 and i <= maxits:
                 if i > 1:
-                    ignoreCache = True
+                    ignoreCache = False if postData == '' else True
                     demystify =  True
 
                 # Trivial: url is from known streamer
@@ -184,7 +193,7 @@ class Parser(object):
                     referer = ''
                     if lItem['referer']:
                         referer = lItem['referer']
-                    data = common.getHTML(inputList.curr_url, None, referer, False, False, ignoreCache, demystify)
+                    data = common.getHTML(inputList.curr_url, form_data, referer, False, False, ignoreCache, demystify)
                     if data == '':
                         return False
 

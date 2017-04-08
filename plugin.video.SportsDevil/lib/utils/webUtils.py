@@ -118,8 +118,8 @@ class BaseRequest(object):
 
         if form_data:
             #zo**tv
-            if 'uagent' in form_data[0]:
-                form_data[0] = ('uagent',urllib.quote(self.s.headers['User-Agent']))
+            #if 'uagent' in form_data[0]:
+               #form_data[0] = ('uagent',urllib.quote(self.s.headers['User-Agent']))
                 #if len(form_data) > 4 and 'Cookie' in form_data[4]:
                     #headers['Cookie'] = form_data[4][1]
                     #del form_data[4]
