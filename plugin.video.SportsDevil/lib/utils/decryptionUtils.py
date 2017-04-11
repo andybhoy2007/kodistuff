@@ -48,8 +48,8 @@ def drenchDec(data, key):
 def zdecode(data):
     import csv
 
-    if re.search(".*eval\(\"\(\"\+\w+\+", data):
-        jsvar = re.findall(".*eval\(\"\(\"\+(\w+)\+", data)[0]
+    if re.search(".*cjsall\s*=\s*eval\(\"\(\"\+\w+\+", data):
+        jsvar = re.findall(".*cjsall\s*=\s*eval\(\"\(\"\+(\w+)\+", data)[0]
         matches = re.findall(jsvar+'\s+\+=\s*(\w+)',data)
         jsall = ''
         try:
