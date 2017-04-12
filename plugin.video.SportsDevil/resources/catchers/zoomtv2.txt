@@ -29,7 +29,8 @@ item_info_build=%s
 
 item_info_name=tmp_
 item_info_from=pageUrl
-item_info_convert=getInfo('%s','.*iscache\s*=\s*"(\w+)".*?function\s+(\w+)\((\w+).*function\s+\w+\(\3.*\w+\s*=\s*"(http.*m3u8).*\2','@REFERER@','iscache|junk|junk2|file')
+#item_info_convert=getInfo('%s','.*iscache\s*=\s*"(\w+)".*?function\s+(\w+)\((\w+).*function\s+\w+\(\3.*\w+\s*=\s*"(http.*m3u8).*\2','@REFERER@','iscache|junk|junk2|file')
+item_info_convert=getInfo('%s','.*?iscache\s*=\s*"([a-f0-9]+)".*(http.*m3u8)','@REFERER@','iscache|file')
 item_info_build=%s
 
 item_info_name=ref
