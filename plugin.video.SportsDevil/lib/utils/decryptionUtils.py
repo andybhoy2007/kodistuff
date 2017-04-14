@@ -45,58 +45,7 @@ def drenchDec(data, key):
     from drench import blowfish
     return blowfish(key).decrypt(data)
 
-def zadd(data):
-    if re.search(".*\w+\s*=\s*eval\(\"\(\"\+\w+\+", data):
-        jsvar = re.findall(".*\w+\s*=\s*eval\(\"\(\"\+(\w+)\+", data)[0]
-        matches = re.findall(jsvar+'\s+\+=\s*(\w+)',data)
-        jsall = ''
-        try:
-            firstword = matches[0]
-            for match in matches:
-                tmp = re.findall(match+'\s*=\s*[\'\"](.*?)[\"\'];',data)
-                if len(tmp)>0:
-                    jsall += tmp[0]
-            tmp_ = re.sub(firstword+r".*eval\(\"\(\"\+\w+\+\"\)\"\);", jsall, data, count=1, flags=re.DOTALL)
-            data = tmp_
-        except:
-            data = data
-            pass
 
-    return data
-
-def zdecode(data):
-    import csv
-
-    csv.register_dialect('js', delimiter=',', quotechar="'", escapechar='\\')
-
-    keys_regex = r'''eval\(.*?function\(([^\)]+)\){'''
-    keys = [re.search(keys_regex, data).groups()[0]]
-
-    values_regex = r'''.*(\w+)\s*=\s*\w+\((.*?)\);\s*eval\(\1'''
-    values = [re.search(values_regex, data, re.DOTALL).groups()[1].replace('\n','')]
-
-    key_list = [l for l in csv.reader(keys, dialect='js')][0]
-    value_list = [l for l in csv.reader(values, dialect='js')][0]
-
-    dictionary = dict(zip(key_list, value_list))
-
-    symtab_regex = r'''\w+\[\w+\]=(\w+)\[\w+\]\|\|\w+'''
-    sym_key = re.search(symtab_regex, data).groups()[0]
-    symtab = dictionary[sym_key]
-
-    split_regex = r'''(.*)\.split\('(.*)'\)'''
-    _symtab, _splitter = re.search(split_regex, symtab).groups()
-    splitter = re.sub(r"""'\s*\+\s*'""", '', _splitter)
-    symtab = _symtab.split(splitter)
-
-    tab_regex = r'''(\w+)=\1\.replace'''
-    tab_key = re.search(tab_regex, data).groups()[0]
-    tab = dictionary[tab_key]
-
-    def lookup(match):
-        return symtab[int(match.group(0))] or str(match.group(0))
-
-    return re.sub(ur'\w+', lookup, tab)
     
 def wdecode(data):
     from itertools import chain
@@ -371,11 +320,7 @@ def doDemystify(data):
     if JsHive.contains_hivelogic(data):
         data = JsHive.unpack_hivelogic(data)
     
-    data = zadd(data)
-    try: 
-        data = zdecode(data)
-        escape_again=True
-    except: pass
+  
     # unescape again
     if escape_again:
         data = doDemystify(data)
