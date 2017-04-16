@@ -7,37 +7,15 @@ item_info_build=%s
 item_info_name=jsurl
 item_info_from=@PARAM1@
 item_info_convert=parseText('%s','.*src=['"]([^'"]+)')
+#item_info_convert=debug
 item_info_build=%s
 
 item_info_name=title
 item_info_from=ch
 item_info_build=TheActionLive - %s
 
-item_info_name=d1
-item_info_from=jsurl
-item_info_convert=getInfo('%s','(.*)','@REFERER@')
-item_info_build=%s
-
-item_info_name=d2
-item_info_from=d1
-#item_info_convert=getInfo('%s','.*^var.*?\[([^\]]+)','@REFERER@')
-item_info_convert=parseText('%s','.*^var.*?\[([^\]]+)')
-item_info_convert=replace('%s','\x','')
-item_info_convert=replace('%s',',','2C')
-item_info_convert=quote(%s)
-item_info_convert=replace('%s','%27','')
-item_info_convert=decodeHex('%s')
-item_info_convert=decodeBase64Special('%s','split')
-#item_info_convert=debug
-item_info_build=%s
-
-item_info_name=phpurl
-item_info_from=d2 || d1
-item_info_convert=parseText('%s','.*src=['"]([^\?]+)')
-item_info_build=%s
-
 item_info_name=pageUrl
-item_info_from=phpurl+'?id='+ch+'&p=0&c=0&stretching=uniform
+item_info_from=http://schedule.racing/everydayncric.php?id='+ch+'&p=0&c=0&stretching=uniform
 item_info_build=%s
 
 item_info_name=tmp
@@ -45,33 +23,33 @@ item_info_from=pageUrl
 item_info_convert=getInfo('%s','.*id=['"]([^"']+).*src=['"]([^"']+).*','@REFERER@','id|js_url2')
 item_info_build=%s
 
-item_info_name=d3
-item_info_from=js_url2
-item_info_convert=getInfo('%s','.*^var.*?\[([^\]]+)','@REFERER@')
-item_info_convert=replace('%s','\x','')
-item_info_convert=replace('%s',',','2C')
-item_info_convert=quote(%s)
-item_info_convert=replace('%s','%27','')
-item_info_convert=decodeHex('%s')
-item_info_convert=decodeBase64Special('%s','split')
-#item_info_convert=debug
-item_info_build=%s
-
-item_info_name=d4
-item_info_from=d3 || js_url2
-item_info_convert=parseText('%s','.*(?:src=)?["'](.*?)\.(?:php|js)')
-#item_info_convert=debug
-item_info_build=%s
-
 item_info_name=playUrl
-item_info_from=d4+'.php?id='+id+'&p=0&c=0&stretching='
+item_info_from=http://playstream.pro/embeditocric.php?id='+id+'&p=0&c=0&stretching='
+item_info_build=%s
+
+item_info_name=tmp2
+item_info_from=playUrl
+item_info_convert=getInfo('%s','.*id\s*=\s*(\w+)>([^<]+).*?var\s*(\w+)\s*=\s*\[(.*?)\];.*function\s*\w+\(\)\s*\{\s*return\(\[([^\]]+)\]\.join\(\"\"\)\s*\+\s*\3.*?getElementById\(\"\1','@pageUrl@','junk1|tok2|junk2|tok1_|uri_')
+item_info_build=%s
+
+item_info_name=uri
+item_info_from=uri_ + ''
+item_info_convert=replace('%s','"','')
+item_info_convert=replace('%s',',','')
+item_info_convert=replace('%s','\','')
+#item_info_convert=debug
+item_info_build=%s
+
+item_info_name=tok1
+item_info_from=tok1_
+item_info_convert=replace('%s','"','')
+item_info_convert=replace('%s',',','')
+#item_info_convert=debug
 item_info_build=%s
 
 item_info_name=file
-item_info_from=playUrl
-item_info_convert=getInfo('%s','.*(http[^"']+\.m3u8[^"']*).*','@pageUrl@')
-#item_info_convert=resolve
-item_info_convert=debug
+item_info_from=uri+tok1+tok2+'
+#item_info_convert=debug
 item_info_build=%s
 
 item_info_name=ref

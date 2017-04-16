@@ -45,7 +45,6 @@ def drenchDec(data, key):
     from drench import blowfish
     return blowfish(key).decrypt(data)
 
-
     
 def wdecode(data):
     from itertools import chain
