@@ -60,8 +60,9 @@ item_info_build=%s
 
 item_info_name=tmp4
 item_info_from=tmp3 || tmp2 || tmp2b
+item_info_convert=debug
 item_info_build=%s
-#item_info_convert=debug
+
 
 item_info_name=url_tmp
 item_info_from=hls://'+tmp4+'|Referer='+pageUrl+'&User-Agent=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML,%20like%20Gecko)%20Chrome%2F56.0.2924.87%20Safari%2F537.36
