@@ -106,7 +106,7 @@ item_info_build=%s
 
 item_info_name=tmp4
 item_info_from=jsUrl
-item_info_convert=getInfo('%s','.*?file'\s*,\s*'([^']+).*?rtmp:\/\/(\d+\.\d+\.\d+\.\d+)','@REFERER@','file3|rtmp3')
+item_info_convert=getInfo('%s','.*?file'\s*,\s*'([^']+).*?rtmp:\/\/([\d\.:]+)','@REFERER@','file3|rtmp3')
 item_info_build=%s
 
 item_info_name=file
@@ -122,7 +122,8 @@ item_info_from=rtmp1 || rtmp2 || rtmp3
 item_info_build=%s
 
 item_info_name=rtmp_url
-item_info_from=rtmp://'+ rtmp +'/flash playpath=' + file + ' swfVfy=1 flashver=WIN\2024,0,0,221 timeout=25 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
+#75.126.73.24
+item_info_from=rtmp://' + rtmp + '/flash playpath=' + file + ' swfVfy=1 flashver=WIN\2024,0,0,221 timeout=25 swfUrl=' + swf + ' live=true pageUrl='+tmpUrl
 item_info_build=%s
 
 item_info_name=url
