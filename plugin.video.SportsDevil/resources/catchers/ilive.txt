@@ -53,6 +53,17 @@ item_info_from=swf
 item_info_convert=simpleToken
 item_info_build=%s
 
-item_info_name=url
+item_info_name=rtmp_url
 item_info_from=stream + ' app=' + app + ' playpath=' + file + ' swfUrl='+swf+' flashver=WIN\2024,0,0,221 live=1 timeout=15 token='+stoken+' pageUrl=http://www.streamlive.to/
+item_info_build=%s
+
+item_info_name=hls_url
+item_info_from=pageUrl
+item_info_convert=getInfo('%s','.*?jwplayer\(.*?setup.*?file"\s*:\s*"(.*?)"','@REFERER@')
+item_info_convert=debug
+item_info_build=http:%s
+
+
+item_info_name=url
+item_info_from=hls_url || rtmp_url
 item_info_build=%s
