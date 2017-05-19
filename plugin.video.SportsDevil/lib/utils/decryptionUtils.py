@@ -9,7 +9,7 @@ try: import json
 except ImportError: import simplejson as json
 try: from Crypto.Cipher import AES
 except ImportError: import pyaes as AES
-#import lib.common
+import lib.common
 
 def encryptDES_ECB(data, key):
     data = data.encode()
@@ -45,6 +45,77 @@ def drenchDec(data, key):
     from drench import blowfish
     return blowfish(key).decrypt(data)
 
+def zadd(data):
+    if re.search(".*\w+\s*=\s*eval\(\"\(\"\+\w+\+", data):
+        jsvar = re.findall(".*\w+\s*=\s*eval\(\"\(\"\+(\w+)\+", data)[0]
+        matches = re.findall(jsvar+'\s+\+=\s*(\w+)',data)
+        jsall = ''
+        try:
+            firstword = matches[0]
+            for match in matches:
+                tmp = re.findall(match+'\s*=\s*[\'\"](.*?)[\"\'];',data)
+                if len(tmp)>0:
+                    jsall += tmp[0]
+            tmp_ = re.sub(firstword+r".*eval\(\"\(\"\+\w+\+\"\)\"\);", jsall, data, count=1, flags=re.DOTALL)
+            data = tmp_
+        except:
+            data = data
+            pass
+
+    return data
+
+def zadd2(data):
+    if re.search(".*\w+\s*=\s*eval\(\"\(\"\+\w+\+", data):
+        #jsvar = re.findall(".*\w+\s*=\s*eval\(\"\(\"\+(\w+)\+", data)[0]
+        matches = re.findall('\w+\s*=\s*\w+\s*\+\s*(\w+)',data)
+        jsall = ''
+        try:
+            firstword = matches[0]
+            for match in matches:
+                tmp = re.findall(match+'\s*=\s*[\'\"](.*?)[\"\'];',data)
+                if len(tmp)>0:
+                    jsall += tmp[0]
+            tmp_ = re.sub(r"jwplayer\(\'\w+.*eval\(\"\(\"\+\w+\+\"\)\"\);", jsall, data, count=1, flags=re.DOTALL)
+            data = tmp_
+        except:
+            data = data
+            pass
+
+    return data
+
+def zdecode(data):
+    import csv
+
+    csv.register_dialect('js', delimiter=',', quotechar="'", escapechar='\\')
+
+    keys_regex = r'''eval\(.*?function\(([^\)]+)\){'''
+    keys = [re.search(keys_regex, data).groups()[0]]
+
+    values_regex = r'''.*(\w+)\s*=\s*\w+\((.*?)\);\s*eval\(\1'''
+    values = [re.search(values_regex, data, re.DOTALL).groups()[1].replace('\n','')]
+
+    key_list = [l for l in csv.reader(keys, dialect='js')][0]
+    value_list = [l for l in csv.reader(values, dialect='js')][0]
+
+    dictionary = dict(zip(key_list, value_list))
+
+    symtab_regex = r'''\w+\[\w+\]=(\w+)\[\w+\]\|\|\w+'''
+    sym_key = re.search(symtab_regex, data).groups()[0]
+    symtab = dictionary[sym_key]
+
+    split_regex = r'''(.*)\.split\('(.*)'\)'''
+    _symtab, _splitter = re.search(split_regex, symtab).groups()
+    splitter = re.sub(r"""'\s*\+\s*'""", '', _splitter)
+    symtab = _symtab.split(splitter)
+
+    tab_regex = r'''(\w+)=\1\.replace'''
+    tab_key = re.search(tab_regex, data).groups()[0]
+    tab = dictionary[tab_key]
+
+    def lookup(match):
+        return symtab[int(match.group(0))] or str(match.group(0))
+
+    return re.sub(ur'\w+', lookup, tab)
     
 def wdecode(data):
     from itertools import chain
@@ -148,6 +219,7 @@ def decryptSaurus(data):
     return data
 
 def doDemystify(data):
+    from base64 import b64decode
     escape_again=False
     
     #init jsFunctions and jsUnpacker
@@ -221,6 +293,30 @@ def doDemystify(data):
             #for base64_data in r2.findall(g):
                 #data = data.replace(g, urllib.unquote(base64_data.decode('base-64')))
                 
+    #jairox: ustreamix -- Obfuscator HTML : https://github.com/BlueEyesHF/Obfuscator-HTML
+    r = re.compile(r"var\s*(\w+)\s*=\s*\[([A-Za-z0-9+=\/\",\s]+)\];\s*\1\.forEach.*-\s*(\d+)")
+    #lib.common.log("JairoX_Decrypt:" + data)
+    if r.findall(data):
+        #lib.common.log("JairoX_Decrypt1:" + data)
+        try:
+            matches = re.compile(r"var\s*(\w+)\s*=\s*\[([A-Za-z0-9+=\/\",\s]+)\];\s*\1\.forEach.*-\s*(\d+)").findall(data)
+            chunks = matches[0][1].split(',')
+            op = int(matches[0][2])
+            dec_data = r""
+            for chunk in chunks:
+                try:
+                    tmp = chunk.replace('"','')
+                    tmp = str(b64decode(tmp))
+                    dig = int(re.sub('[\D\s\n]','',tmp))
+                    dig = dig - op
+                    dec_data += chr(dig)
+                except:
+                    pass
+            data = re.sub(r"(?s)<script>\s*var\s*\w+\s*=.*?var\s*(\w+)\s*=\s*\[.*<\/script>[\"']?", dec_data, data)
+
+        except:
+            pass
+    
     r = re.compile('(<script.*?str=\'@.*?str.replace)')
     while r.findall(data):
         for g in r.findall(data):
@@ -319,7 +415,14 @@ def doDemystify(data):
     if JsHive.contains_hivelogic(data):
         data = JsHive.unpack_hivelogic(data)
     
-  
+    if "zoomtv" in data:
+        #lib.common.log("JairoZoom:" + data)
+        data = zadd(data)
+        data = zadd2(data)
+        try: 
+            data = zdecode(data)
+            escape_again=True
+        except: pass
     # unescape again
     if escape_again:
         data = doDemystify(data)
