@@ -329,5 +329,5 @@ item_info_build=%s
 
 item_info_name=url
 #item_info_from=rtmp+' playPath='+file+' swfUrl=http://thecdn.04stream.com/p/ooolo1.swf flashver=WIN\2021,0,0,242 timeout=10 live=1 
-item_info_from=url2 || url1
+item_info_from=url1 || url2
 item_info_build=%s
