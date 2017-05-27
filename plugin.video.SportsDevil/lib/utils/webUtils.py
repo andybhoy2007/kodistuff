@@ -116,6 +116,13 @@ class BaseRequest(object):
         if 'vipleague' in url or 'strikeout' in url or 'homerun' in url:
             self.s.verify = False
 
+        if 'dinostream.pw' in urlparse.urlsplit(url).netloc:
+            self.s.headers.update({'Upgrade-Insecure-Requests': '1'})
+            self.s.headers.update({'Host': 'wwww.dinostream.pw'})
+            self.s.headers.update({'Accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'})
+            self.s.headers.update({'Accept-Language' : 'en-US,en;q=0.8,de;q=0.6,es;q=0.4'})
+            self.s.headers.update({'Accept-Encoding': 'gzip, deflate, sdch'})
+
         if form_data:
             #zo**tv
             #if 'uagent' in form_data[0]:
