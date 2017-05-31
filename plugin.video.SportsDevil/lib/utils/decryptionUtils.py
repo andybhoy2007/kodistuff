@@ -9,7 +9,7 @@ try: import json
 except ImportError: import simplejson as json
 try: from Crypto.Cipher import AES
 except ImportError: import pyaes as AES
-import lib.common
+#import lib.common
 
 def encryptDES_ECB(data, key):
     data = data.encode()
