@@ -114,7 +114,7 @@ class BaseRequest(object):
         if 'streamlive.to' in urlparse.urlsplit(url).netloc:
             self.s.verify = False
 
-        if 'vipleague' in url or 'strikeout' in url or 'homerun' in url:
+        if 'vipleague' in url or 'strikeout' in url or 'homerun' or 'nbastreams' in url:
             self.s.verify = False
             
         #if 'dinostream.pw' in urlparse.urlsplit(url).netloc:
