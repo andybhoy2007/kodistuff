@@ -162,8 +162,8 @@ class Parser(object):
             
             form_data = None
             postData = ''
-            if re.compile(r'\|[\w&=]+').findall(lItem['url']):
-                parts = lItem['url'].split('|') #jairox: added for post in menu cfgs
+            if re.compile(r'\|[\w&=]+').findall(lItem['url']): #jairox: added for post in menu cfgs
+                parts = lItem['url'].split('|') 
                 url = parts[0]
                 lItem['url'] = url
                 if len(parts) > 1:
