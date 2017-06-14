@@ -131,7 +131,7 @@ item_info_convert=quote('%s')
 item_info_build=%s
 
 item_info_name=url
-#item_info_from=http://127.1.2.3:45678/livestreamer/'+url4+'|seekable=0
-item_info_from=plugin://plugin.video.f4mTester/?streamtype=HLSRETRY&amp;name='+title+'&amp;url='+url_
+item_info_from=http://127.1.2.3:45678/livestreamer/'+url4+'|seekable=0
+#item_info_from=plugin://plugin.video.f4mTester/?streamtype=HLSRETRY&amp;name='+title+'&amp;url='+url_
 #item_info_from=url_
 item_info_build=%s
